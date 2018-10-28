@@ -24,8 +24,8 @@ defmodule Junglex.Geocoding do
   |> Stream.run
 
   # default clause
-  def continent(country_code) do
-      Logger.error "country code #{inspect country_code} doesn't match any continent"
+  def continent(_country_code) do
+      #Logger.error "country code #{inspect country_code} doesn't match any continent"
       @unknown
   end
 

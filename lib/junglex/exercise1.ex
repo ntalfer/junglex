@@ -54,8 +54,8 @@ def process(jobs_file, categories_file) do
        #Junglex.Geonames.get_country(job["office_latitude"], job["office_longitude"])
        Junglex.Here.get_country(job["office_latitude"], job["office_longitude"])
        |> case do
-         {:error, error} ->
-	     Logger.error "unable to find country code for job #{inspect job}: #{inspect error}"
+         {:error, _error} ->
+	     #Logger.error "unable to find country code for job #{inspect job}: #{inspect error}"
 	     nil
 	 {:ok, code} ->
 	    code

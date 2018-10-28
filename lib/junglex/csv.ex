@@ -23,13 +23,10 @@ defmodule Junglex.CSV do
       # example: 31,FULL_TIME,"[Louis Vuitton North America] Team Manager, RTW - NYC",40.7630463,-73.973527\n
       # some fields may also be empty
       line = String.trim_trailing(line, "\n")
-      #IO.inspect line
       values = Regex.scan(~r/".*",|[^,]*,/, line <> ",")
 	       |> Enum.flat_map(&(&1))
 	       |> Enum.map(&(String.trim_trailing(&1, ",")))
-	     #IO.inspect values
       item = Enum.zip(keys, values) |> Enum.into(%{})
-      #IO.inspect item
       {[item], keys}
   end
   
