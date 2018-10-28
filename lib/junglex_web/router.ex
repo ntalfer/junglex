@@ -19,8 +19,21 @@ defmodule JunglexWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api", JunglexWeb do
+    pipe_through :api
+    get "/jobs", JobController, :index
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", JunglexWeb do
   #   pipe_through :api
   # end
+
+  def swagger_info do
+    %{info: %{version: "1.0", title: "Junglex"}}
+  end
+
+    scope "/api/swagger" do
+      forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :junglex, swagger_file: "swagger.json"
+    end
 end

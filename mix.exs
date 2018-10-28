@@ -7,7 +7,7 @@ defmodule Junglex.Mixfile do
       version: "0.0.1",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      compilers: [:phoenix, :gettext, :phoenix_swagger] ++ Mix.compilers ++ [:phoenix_swagger],
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -45,7 +45,11 @@ defmodule Junglex.Mixfile do
       {:plug_cowboy, "~> 1.0"},
       {:tesla, "~> 1.2"},
       {:jason, ">= 1.0.0"},
-      {:cachex, "~> 3.1"}
+      {:cachex, "~> 3.1"},
+      {:geocalc, "~> 0.7.1"},
+      {:phoenix_swagger, "~> 0.8"},
+      {:ex_json_schema, "~> 0.5"},
+      {:table_rex, "2.0.0"}
     ]
   end
 
