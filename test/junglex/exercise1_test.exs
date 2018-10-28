@@ -3,10 +3,26 @@ defmodule Junglex.Exercise1Test do
   
   test "exercise1" do
 
-    jobs_file = Path.join([__DIR__, "technical-test-jobs.csv"])
+    jobs_file = Path.join([__DIR__, "technical-test-jobs-small.csv"])
     categories_file = Path.join([__DIR__, "technical-test-professions.csv"])
 
-    IO.inspect Junglex.Exercise1.process(jobs_file, categories_file)
+    expected = %{"Afrique" => %{"Admin" => 0, "Business" => 0, "Conseil" => 0, "Créa" => 0,
+    "Divers" => 0, "Marketing / Comm'" => 0, "Retail" => 0, "Tech" => 0},
+  "Amérique" => %{"Admin" => 0, "Business" => 0, "Conseil" => 0, "Créa" => 0,
+    "Divers" => 0, "Marketing / Comm'" => 0, "Retail" => 1, "Tech" => 0},
+  "Antarctique" => %{"Admin" => 0, "Business" => 0, "Conseil" => 0,
+    "Créa" => 0, "Divers" => 0, "Marketing / Comm'" => 0, "Retail" => 0,
+    "Tech" => 0},
+  "Asie" => %{"Admin" => 0, "Business" => 0, "Conseil" => 0, "Créa" => 0,
+    "Divers" => 0, "Marketing / Comm'" => 0, "Retail" => 0, "Tech" => 0},
+  "Europe" => %{"Admin" => 1, "Business" => 3, "Conseil" => 0, "Créa" => 0,
+    "Divers" => 0, "Marketing / Comm'" => 1, "Retail" => 1, "Tech" => 2},
+  "Inconnu" => %{"Admin" => 0, "Business" => 0, "Conseil" => 0, "Créa" => 0,
+    "Divers" => 0, "Marketing / Comm'" => 0, "Retail" => 0, "Tech" => 0},
+  "Océanie" => %{"Admin" => 0, "Business" => 0, "Conseil" => 0, "Créa" => 0,
+    "Divers" => 0, "Marketing / Comm'" => 0, "Retail" => 0, "Tech" => 0}}
+    
+    assert Junglex.Exercise1.process(jobs_file, categories_file) == expected
 
 # API calls failing with geonames.org
 # 13:55:34.676 [error] unable to find country code for job %{"contract_type" => "INTERNSHIP", "name" => "Stage - Business Developer - Lille", "office_latitude" => "", "office_longitude" => "", "profession_id" => "2"}: "invalid lat/long"

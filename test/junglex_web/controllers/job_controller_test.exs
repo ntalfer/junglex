@@ -50,5 +50,9 @@ defmodule JunglexWeb.JobControllerTest do
       assert response == %{"error" => "one of the following parameters is missing: latitude, longitude, radius"}
 
   end
+
+  test "swagger" do
+    assert :ok == Mix.Task.run("phx.swagger.generate")
+  end
   
 end

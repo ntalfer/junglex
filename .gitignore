@@ -29,4 +29,7 @@ npm-debug.log
 *~
 
 # escript
-junglex
+/junglex
+
+# code coverage
+/cover

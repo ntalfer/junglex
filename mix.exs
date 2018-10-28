@@ -11,7 +11,8 @@ defmodule Junglex.Mixfile do
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps(),
-      escript: [main_module: Junglex.CLI]
+      escript: [main_module: Junglex.CLI],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -49,7 +50,8 @@ defmodule Junglex.Mixfile do
       {:geocalc, "~> 0.7.1"},
       {:phoenix_swagger, "~> 0.8"},
       {:ex_json_schema, "~> 0.5"},
-      {:table_rex, "2.0.0"}
+      {:table_rex, "2.0.0"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
@@ -64,7 +66,9 @@ defmodule Junglex.Mixfile do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "test": [#"ecto.create --quiet", "ecto.migrate",
-      	      "test"]
+      	      "coveralls.html"
+	      #"test"
+	      ]
     ]
   end
 end

@@ -34,7 +34,7 @@ defmodule Junglex.Geocoding do
   defp to_fr("Europe"), do: @eu
   defp to_fr("Americas"), do: @am
   defp to_fr("Asia"), do: @as
-  defp to_fr("Oceania"), do: @as
+  defp to_fr("Oceania"), do: @oc
   defp to_fr("Africa"), do: @af
   defp to_fr("Antarctica"), do: @an
   defp to_fr(""), do: @unknown
