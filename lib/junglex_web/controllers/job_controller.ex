@@ -9,19 +9,19 @@ def swagger_definitions do
       description "A job"
       properties do
         contract_type :string, "the contract type"
-        distance :float, "the distance in meters between the job office and the requested geolocation"
+        distance :float, "the distance in kilometers between the job office and the requested geolocation"
         name :string, "the job name"
-	office_latitude :string, "the office latitude"
-        office_longitude :string, "the office longitude"
-        profession_id :string, "the profession id"
+	office_latitude :float, "the office latitude"
+        office_longitude :float, "the office longitude"
+        profession_id :integer, "the profession id"
       end
       example %{
         contract_type: "TEMPORARY", 
-        distance: 200.376, 
+        distance: 10, 
         name: "WEB / Graphic Designer", 
-        office_latitude: "25.2048493",
-        office_longitude: "55.2707828", 
-        profession_id: "17"        
+        office_latitude: 25.2048493,
+        office_longitude: 55.2707828, 
+        profession_id: 17        
       }
     end,
     Jobs: swagger_schema do
@@ -39,7 +39,7 @@ def swagger_definitions do
   parameters do
     latitude :query, :float, "the latitude of the point", required: true, example: 25.2048493
     longitude :query, :float, "the longitude of the point", required: true, example: 55.2707828
-    radius :query, :float, "the radius in meters", required: true, example: 1000
+    radius :query, :float, "the radius in kilometers", required: true, example: 10
   end
    response 200, "Success", Schema.ref(:Jobs)
     response 400, "Bad request"
