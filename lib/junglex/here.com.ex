@@ -14,14 +14,19 @@ defmodule Junglex.Here do
   def get_country(lat, long) do
     case get("/reversegeocode.json?prox=#{lat}%2C#{long}&mode=retrieveAddresses&app_id=#{@app_id}&app_code=#{@app_code}&gen=9&maxresults=1") do
       {:ok, %{body: body}} ->
-        cc =
-	body
-	|> get_in(["Response", "View"])
-	|> Enum.at(0)
-	|> get_in(["Result"])
-	|> Enum.at(0)
-	|> get_in(["Location", "Address", "Country"])
-        {:ok, cc}
+	      body
+	      |> get_in(["Response", "View"])
+        |> case do
+             [] ->
+               {:error, :not_found}
+             v ->
+               cc = v
+	             |> Enum.at(0)
+	             |> get_in(["Result"])
+	             |> Enum.at(0)
+	             |> get_in(["Location", "Address", "Country"])
+               {:ok, cc}
+           end
       {:error, :socket_closed_remotely} ->
         get_country(lat, long)
       {:error, _} = error ->
