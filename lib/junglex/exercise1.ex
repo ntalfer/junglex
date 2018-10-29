@@ -6,15 +6,18 @@ defmodule Junglex.Exercise1 do
   # need to add this category as some jobs have no profession id
   @divers %{"id" => "", "name" => "Divers", "category_name" => "Divers"}
 
-def process(jobs_file, categories_file) do
-
-    Cachex.start_link(:my_cache, [])
-    Cachex.put(:my_cache, "api_calls", 0)
-    
-    categories =
+  def get_categories(categories_file) do
       categories_file
       |> CSV.decode
       |> Kernel.++([@divers])
+  end
+  
+  def process(jobs_file, categories_file) do
+
+    {:ok, cache_pid} = Cachex.start_link(:my_cache, [])
+    #Cachex.put(:my_cache, "api_calls", 0)
+    
+    categories = get_categories(categories_file)
       
     categories_counter =
       categories
@@ -29,7 +32,7 @@ def process(jobs_file, categories_file) do
     res = 
     jobs_file
     |> CSV.decode(true)
-    |> Task.async_stream(&job_with_continent/1)
+    |> Task.async_stream(&job_with_continent/1, [timeout: 30000])
     |> Stream.map(fn {:ok, res} -> res end)
     |> Stream.map(&(job_with_category(&1, categories)))
     |> Enum.to_list
@@ -42,6 +45,7 @@ def process(jobs_file, categories_file) do
     end)
     
     #IO.inspect "api_calls=#{inspect Cachex.get(:my_cache, "api_calls")}"
+    Process.exit(cache_pid, :normal)
 
     res
   end
@@ -62,7 +66,7 @@ def process(jobs_file, categories_file) do
        end
        |> Geocoding.continent
        Cachex.put(:my_cache, cache_key, continent)
-       Cachex.incr(:my_cache, "api_calls", 1)
+       #Cachex.incr(:my_cache, "api_calls", 1)
        Map.put(job, "continent", continent)
      {:ok, continent} ->
        Map.put(job, "continent", continent)
